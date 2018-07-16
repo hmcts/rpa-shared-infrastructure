@@ -1,0 +1,7 @@
+#!groovy
+
+@Library("Infrastructure")
+
+sharedInfrastructurePipeline('rpa', 'sandbox', 'sandbox')
+sharedInfrastructurePipeline('rpa', 'saat', 'sandbox')
+sharedInfrastructurePipeline('rpa', 'sprod', 'sandbox')

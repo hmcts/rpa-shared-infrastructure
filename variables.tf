@@ -1,9 +1,7 @@
-variable "product" {
-  type = "string"
-}
+variable "product" {}
 
 variable "location" {
-  type    = "string"
+  type = "string"
   default = "UK South"
 }
 
@@ -14,9 +12,11 @@ variable "appinsights_location" {
   description = "Location for Application Insights"
 }
 
-variable "env" {
-  type = "string"
+variable "common_tags" {
+  type = "map"
 }
+
+variable "env" {}
 
 variable "application_type" {
   type        = "string"
@@ -31,3 +31,23 @@ variable "tenant_id" {
 variable "jenkins_AAD_objectId" {
   description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
 }
+
+variable "subscription" {}
+
+variable "team_name" {
+  default = "rpa"
+}
+
+variable "team_contact" {
+  default = "#judical_ui"
+}
+
+variable "name" {
+  default = false
+}
+
+variable "asp_capacity" {
+  default = 2
+}
+
+variable "ilbIp" {}

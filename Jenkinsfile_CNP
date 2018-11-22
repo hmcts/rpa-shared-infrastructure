@@ -9,6 +9,5 @@ Environment environment = new Environment(env)
 onMaster {
   sharedInfrastructurePipeline('rpa', environment.nonProdName, 'nonprod')
   sharedInfrastructurePipeline('rpa', environment.demoName, 'nonprod')
-  sharedInfrastructurePipeline('rpa', environment.hmctsDemoName, 'nonprod')
   sharedInfrastructurePipeline('rpa', environment.prodName, 'prod')
 }

@@ -11,3 +11,7 @@ onMaster {
   sharedInfrastructurePipeline('rpa', environment.demoName, 'nonprod')
   sharedInfrastructurePipeline('rpa', environment.prodName, 'prod')
 }
+
+onHMCTSDemo {
+  sharedInfrastructurePipeline('rpa', environment.hmctsDemoName, 'hmctsdemo')
+}

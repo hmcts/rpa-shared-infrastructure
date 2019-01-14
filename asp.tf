@@ -27,7 +27,7 @@ module "asp-rd" {
   resource_group_name = "${azurerm_resource_group.rg.name}"
   asp_capacity        = "${local.asp_capacity}"
   asp_sku_size        = "${local.sku_size}"
-  asp_name            = "rpa-ref-data"
+  asp_name            = "${var.product}-rd"
   ase_name            = "${local.ase_name}"
   tag_list            = "${local.tags}"
 }

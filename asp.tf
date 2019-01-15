@@ -31,3 +31,15 @@ module "asp-rd" {
   ase_name            = "${local.ase_name}"
   tag_list            = "${local.tags}"
 }
+
+module "asp-coh" {
+  source              = "git@github.com:hmcts/cnp-module-app-service-plan?ref=master"
+  location            = "${var.location}"
+  env                 = "${var.env}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  asp_capacity        = "${local.asp_capacity}"
+  asp_sku_size        = "${local.sku_size}"
+  asp_name            = "${var.product}-coh"
+  ase_name            = "${local.ase_name}"
+  tag_list            = "${local.tags}"
+}

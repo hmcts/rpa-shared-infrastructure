@@ -52,9 +52,9 @@ variable "asp_capacity" {
 
 variable "ilbIp" {}
   
-variable "dn_external_cert_name" {}
+variable "external_cert_name" {}
 
-variable "dn_external_hostname" {}
+variable "external_hostname" {}
 
 variable "external_cert_vault_uri" {}
 

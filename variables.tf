@@ -58,6 +58,4 @@ variable "external_hostname" {}
 
 variable "external_cert_vault_uri" {}
 
-variable "aos_external_cert_name" {}
-
 variable "aos_external_hostname" {}

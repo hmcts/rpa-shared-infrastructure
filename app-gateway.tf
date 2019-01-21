@@ -44,7 +44,7 @@ module "appGw" {
     {
       name = "${var.product}-${var.env}"
 
-      backendAddresses = "${module.palo_alto.untrusted_ips_fqdn}"
+      backendAddresses = ""
     },
   ]
 

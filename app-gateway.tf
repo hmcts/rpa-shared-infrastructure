@@ -38,6 +38,15 @@ module "appGw" {
       hostName                = "${var.external_hostname}"
     },
   ]
+  
+   # Backend address Pools
+  backendAddressPools = [
+    {
+      name = "${var.product}-${var.env}"
+
+      backendAddresses = "${module.palo_alto.untrusted_ips_fqdn}"
+    },
+  ]
 
   backendHttpSettingsCollection = [
     {

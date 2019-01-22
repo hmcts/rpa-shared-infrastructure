@@ -4,9 +4,9 @@ data "azurerm_key_vault_secret" "cert" {
 }
 
 locals {
- jui_suffix  = “${var.env != “prod” ? “-jcm” : “”}”
+ jui_suffix  = “${var.env != “prod” ? “-webapp” : “”}”
 
- jcm_internal_hostname  = “${var.product}-jcm-${var.env}.service.core-compute-${var.env}.internal”
+ webapp_internal_hostname  = “${var.product}-webapp-${var.env}.service.core-compute-${var.env}.internal”
 }
 
 module "appGw" {
@@ -44,7 +44,7 @@ module "appGw" {
       hostName                = "${var.external_hostname}"
     },
     {
-      name                    = "${var.product}-jcm"
+      name                    = "${var.product}-webapp"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort80"
       Protocol                = "Http"

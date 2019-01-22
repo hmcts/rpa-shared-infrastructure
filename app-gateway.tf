@@ -4,13 +4,13 @@ data "azurerm_key_vault_secret" "cert" {
 }
 
 locals {
- jui_suffix  = “${var.env != “prod” ? “-webapp” : “”}”
+ jui_suffix  = "${var.env != "prod" ? "-webapp" : ""}"
 
- webapp_internal_hostname  = “${var.product}-webapp-${var.env}.service.core-compute-${var.env}.internal”
+ webapp_internal_hostname  = "${var.product}-webapp-${var.env}.service.core-compute-${var.env}.internal"
 }
 
 module "appGw" {
-  source            = "git@github.com:hmcts/cnp-module-waf?ref=master"
+  source            = "git@github.com:hmcts/cnp-module-waf?ref=stripDownWf"
   env               = "${var.env}"
   subscription      = "${var.subscription}"
   location          = "${var.location}"

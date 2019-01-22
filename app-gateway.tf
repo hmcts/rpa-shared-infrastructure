@@ -43,14 +43,14 @@ module "appGw" {
       SslCertificate          = "${var.external_cert_name}"
       hostName                = "${var.external_hostname}"
     },
-      {
+    {
       name                    = "${var.product}-jcm"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort80"
       Protocol                = "Http"
       SslCertificate          = ""
       hostName                = "${var.external_hostname}"
-    },
+   },
   ]
   
    # Backend address Pools

@@ -3,8 +3,14 @@ data "azurerm_key_vault_secret" "cert" {
   vault_uri = "${var.external_cert_vault_uri}"
 }
 
+locals {
+ jui_suffix  = “${var.env != “prod” ? “-jcm” : “”}”
+
+ jcm_internal_hostname  = “${var.product}-jcm-${var.env}.service.core-compute-${var.env}.internal”
+}
+
 module "appGw" {
-  source            = "git@github.com:hmcts/cnp-module-waf?ref=stripDownWf"
+  source            = "git@github.com:hmcts/cnp-module-waf?ref=master"
   env               = "${var.env}"
   subscription      = "${var.subscription}"
   location          = "${var.location}"
@@ -37,6 +43,14 @@ module "appGw" {
       SslCertificate          = "${var.external_cert_name}"
       hostName                = "${var.external_hostname}"
     },
+    {
+      name                    = "${var.product}-jcm"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort            = "frontendPort80"
+      Protocol                = "Http"
+      SslCertificate          = ""
+      hostName                = "${var.external_hostname}"
+   },
   ]
   
    # Backend address Pools

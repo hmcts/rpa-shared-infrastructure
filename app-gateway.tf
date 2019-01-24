@@ -58,12 +58,15 @@ module "appGw" {
    # Backend address Pools
   backendAddressPools = [
     {
-      name = "${var.product}-${var.env}"
+      name = "${var.product}-${var.env}-backend-ilb"
 
-      backendAddresses = ""
+      backendAddresses = [
+        {
+          ipAddress = "${local.jui_internal_hostname}"
     },
-  ]
-
+        ]
+      }
+    ]
   backendHttpSettingsCollection = [
     {
       name                           = "backend"

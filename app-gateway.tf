@@ -60,7 +60,11 @@ module "appGw" {
     {
       name = "${var.product}-${var.env}"
 
-      backendAddresses = ""
+      backendAddresses = [
+        {
+          ipAddress = "${local.webapp_internal_hostname}"
+        },
+      ]
     },
   ]
 

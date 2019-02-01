@@ -39,7 +39,7 @@ module "appGw" {
   httpListeners = [
     {
       name                    = "https-listener"
-      FrontendIPConfiguration = "appGatewayFrontendIP"
+      xdIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort443"
       Protocol                = "Https"
       SslCertificate          = "${var.external_cert_name}"
@@ -78,7 +78,7 @@ module "appGw" {
       probeEnabled                   = "True"
       probe                          = "http-probe"
       PickHostNameFromBackendAddress = "False"
-      Host                           = "${var.external_hostname}"
+      HostName                           = "${var.external_hostname}"
     },
   ]
 

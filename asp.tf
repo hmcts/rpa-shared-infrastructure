@@ -3,6 +3,8 @@ locals {
 
   // num of apps * 1 to save cost where we can, * 2 in prod like environments
   asp_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 6 : 3}"
+  
+  asp_rd_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 12 : 6}"
 
   // I2 in prod like env, I1 everywhere else
   sku_size = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? "I2" : "I1"}"
@@ -25,7 +27,7 @@ module "asp-rd" {
   location            = "${var.location}"
   env                 = "${var.env}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  asp_capacity        = "${local.asp_capacity}"
+  asp_rd_capacity     = "${local.asp_capacity}"
   asp_sku_size        = "${local.sku_size}"
   asp_name            = "${var.product}-rd"
   ase_name            = "${local.ase_name}"

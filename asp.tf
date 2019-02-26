@@ -6,6 +6,12 @@ locals {
   
   asp_rd_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 12 : 6}"
 
+  asp_anno_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 2 : 1}"
+
+  asp_bundling_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 2 : 1}"
+
+  asp_dg_capacity = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? 2 : 1}"
+
   // I2 in prod like env, I1 everywhere else
   sku_size = "${var.env == "prod" || var.env == "sprod" || var.env == "aat" ? "I2" : "I1"}"
 }
@@ -34,14 +40,26 @@ module "asp-rd" {
   tag_list            = "${local.tags}"
 }
 
-module "asp-em" {
+module "asp-anno" {
   source              = "git@github.com:hmcts/cnp-module-app-service-plan?ref=master"
   location            = "${var.location}"
   env                 = "${var.env}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  asp_capacity        = "${local.asp_rd_capacity}"
+  asp_capacity        = "${local.asp_anno_capacity}"
   asp_sku_size        = "${local.sku_size}"
-  asp_name            = "${var.product}-em"
+  asp_name            = "${var.product}-anno"
+  ase_name            = "${local.ase_name}"
+  tag_list            = "${local.tags}"
+}
+
+module "asp-bundling" {
+  source              = "git@github.com:hmcts/cnp-module-app-service-plan?ref=master"
+  location            = "${var.location}"
+  env                 = "${var.env}"
+  resource_group_name = "${azurerm_resource_group.rg.name}"
+  asp_capacity        = "${local.asp_bundling_capacity}"
+  asp_sku_size        = "${local.sku_size}"
+  asp_name            = "${var.product}-bundling"
   ase_name            = "${local.ase_name}"
   tag_list            = "${local.tags}"
 }
@@ -51,7 +69,7 @@ module "asp-dg" {
   location            = "${var.location}"
   env                 = "${var.env}"
   resource_group_name = "${azurerm_resource_group.rg.name}"
-  asp_capacity        = "${local.asp_rd_capacity}"
+  asp_capacity        = "${local.asp_dg_capacity}"
   asp_sku_size        = "${local.sku_size}"
   asp_name            = "${var.product}-dg"
   ase_name            = "${local.ase_name}"

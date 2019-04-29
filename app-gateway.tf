@@ -47,7 +47,7 @@ module "appGw" {
       hostName                = "${var.external_hostname}"
     },
     {
-      name                    = "${var.product}-webapp"
+      name                    = "http-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort80"
       Protocol                = "Http"

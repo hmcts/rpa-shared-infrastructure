@@ -12,7 +12,7 @@ locals {
 }
 
 module "appGw" {
-  source            = "git@github.com:hmcts/cnp-module-waf?ref=ccd/CHG0033576"
+  source            = "git@github.com:hmcts/cnp-module-waf?ref=master"
   env               = "${var.env}"
   subscription      = "${var.subscription}"
   location          = "${var.location}"
@@ -71,13 +71,24 @@ module "appGw" {
 
   backendHttpSettingsCollection = [
     {
-      name                           = "backend"
+      name                           = "backend-80"
       port                           = 80
       Protocol                       = "Http"
-      AuthenticationCertificates     = ""
       CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = ""
       probeEnabled                   = "True"
       probe                          = "http-probe"
+      PickHostNameFromBackendAddress = "False"
+      HostName                       = "${var.external_hostname}"
+    },
+      {
+      name                           = "backend-443"
+      port                           = 443
+      Protocol                       = "Https"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = "ilbCert"
+      probeEnabled                   = "True"
+      probe                          = "https-probe"
       PickHostNameFromBackendAddress = "False"
       HostName                       = "${var.external_hostname}"
     },
@@ -86,11 +97,18 @@ module "appGw" {
   # Request routing rules
   requestRoutingRules = [
     {
+      name                = "http"
+      RuleType            = "Basic"
+      httpListener        = "http-listener"
+      backendAddressPool  = "${var.product}-${var.env}"
+      backendHttpSettings = "backend-80"
+    },
+    {
       name                = "https"
       RuleType            = "Basic"
       httpListener        = "https-listener"
       backendAddressPool  = "${var.product}-${var.env}"
-      backendHttpSettings = "backend"
+      backendHttpSettings = "backend-443"
     },
   ]
 
@@ -103,9 +121,21 @@ module "appGw" {
       timeout                             = 30
       unhealthyThreshold                  = 5
       pickHostNameFromBackendHttpSettings = "false"
-      backendHttpSettings                 = "backend"
+      backendHttpSettings                 = "backend-80"
       host                                = "${var.external_hostname}"
-      healthyStatusCodes                  = "200-404"                  // MS returns 400 on /, allowing more codes in case they change it
+      healthyStatusCodes                  = "200-399"                  #// MS returns 400 on /, allowing more codes in case they change it
+    },
+    {
+      name                                = "https-probe"
+      protocol                            = "Https"
+      path                                = "/"
+      interval                            = 30
+      timeout                             = 30
+      unhealthyThreshold                  = 5
+      pickHostNameFromBackendHttpSettings = "false"
+      backendHttpSettings                 = "backend-443"
+      host                                = "${var.external_hostname}"
+      healthyStatusCodes                  = "200-399"                  #// MS returns 400 on /, allowing more codes in case they change it
     },
   ]
 }

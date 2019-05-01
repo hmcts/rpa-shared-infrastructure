@@ -68,7 +68,7 @@ module "appGw" {
       ]
     },
   ]
-
+  use_authentication_cert = true
   backendHttpSettingsCollection = [
     {
       name                           = "backend-80"

@@ -56,4 +56,6 @@ variable "external_cert_name" {}
 
 variable "external_hostname" {}
 
+variable "external_www_hostname" {}
+
 variable "external_cert_vault_uri" {}

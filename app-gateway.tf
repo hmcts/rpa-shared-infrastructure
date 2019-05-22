@@ -39,6 +39,14 @@ module "appGw" {
   # Http Listeners
   httpListeners = [
     {
+      name                    = "http-listener"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort            = "frontendPort80"
+      Protocol                = "Http"
+      SslCertificate          = ""
+      hostName                = "${var.external_hostname}"
+    },
+    {
       name                    = "https-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort443"
@@ -47,13 +55,21 @@ module "appGw" {
       hostName                = "${var.external_hostname}"
     },
     {
-      name                    = "http-listener"
+      name                    = "http-www-listener"
       FrontendIPConfiguration = "appGatewayFrontendIP"
       FrontendPort            = "frontendPort80"
       Protocol                = "Http"
       SslCertificate          = ""
-      hostName                = "${var.external_hostname}"
-   },
+      hostName                = "${var.external_www_hostname}"
+    },
+    {
+      name                    = "https-www-listener"
+      FrontendIPConfiguration = "appGatewayFrontendIP"
+      FrontendPort            = "frontendPort443"
+      Protocol                = "Https"
+      SslCertificate          = "${var.external_cert_name}"
+      hostName                = "${var.external_www_hostname}"
+    },
   ]
   
    # Backend address Pools
@@ -92,6 +108,28 @@ module "appGw" {
       PickHostNameFromBackendAddress = "False"
       HostName                       = "${var.external_hostname}"
     },
+      {
+      name                           = "backend-www-80"
+      port                           = 80
+      Protocol                       = "Http"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = ""
+      probeEnabled                   = "True"
+      probe                          = "http-www-probe"
+      PickHostNameFromBackendAddress = "False"
+      HostName                       = "${var.external_www_hostname}"
+    },
+      {
+      name                           = "backend-www-443"
+      port                           = 443
+      Protocol                       = "Https"
+      CookieBasedAffinity            = "Disabled"
+      AuthenticationCertificates     = "ilbCert"
+      probeEnabled                   = "True"
+      probe                          = "https-www-probe"
+      PickHostNameFromBackendAddress = "False"
+      HostName                       = "${var.external_www_hostname}"
+    },
   ]
 
   # Request routing rules
@@ -109,6 +147,20 @@ module "appGw" {
       httpListener        = "https-listener"
       backendAddressPool  = "${var.product}-${var.env}"
       backendHttpSettings = "backend-443"
+    },
+    {
+      name                = "http-www"
+      RuleType            = "Basic"
+      httpListener        = "http-www-listener"
+      backendAddressPool  = "${var.product}-${var.env}"
+      backendHttpSettings = "backend-www-80"
+    },
+    {
+      name                = "https-www"
+      RuleType            = "Basic"
+      httpListener        = "https-www-listener"
+      backendAddressPool  = "${var.product}-${var.env}"
+      backendHttpSettings = "backend-www-443"
     },
   ]
 
@@ -135,6 +187,30 @@ module "appGw" {
       pickHostNameFromBackendHttpSettings = "false"
       backendHttpSettings                 = "backend-443"
       host                                = "${var.external_hostname}"
+      healthyStatusCodes                  = "200-399"                  #// MS returns 400 on /, allowing more codes in case they change it
+    },
+    {
+      name                                = "http-www-probe"
+      protocol                            = "Http"
+      path                                = "/"
+      interval                            = 30
+      timeout                             = 30
+      unhealthyThreshold                  = 5
+      pickHostNameFromBackendHttpSettings = "false"
+      backendHttpSettings                 = "backend-www-80"
+      host                                = "${var.external_www_hostname}"
+      healthyStatusCodes                  = "200-399"                  #// MS returns 400 on /, allowing more codes in case they change it
+    },
+    {
+      name                                = "https-www-probe"
+      protocol                            = "Https"
+      path                                = "/"
+      interval                            = 30
+      timeout                             = 30
+      unhealthyThreshold                  = 5
+      pickHostNameFromBackendHttpSettings = "false"
+      backendHttpSettings                 = "backend-www-443"
+      host                                = "${var.external_www_hostname}"
       healthyStatusCodes                  = "200-399"                  #// MS returns 400 on /, allowing more codes in case they change it
     },
   ]

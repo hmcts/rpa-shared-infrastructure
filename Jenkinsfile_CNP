@@ -3,6 +3,6 @@
 @Library("Infrastructure") _
 
 withInfraPipeline("rpa") {
-
+  enableSlackNotifications("#rpa-pipeline")
 }
 

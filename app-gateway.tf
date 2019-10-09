@@ -10,7 +10,7 @@ locals {
  webapp_internal_hostname  = "jui-webapp-${var.env}.service.core-compute-${var.env}.internal"
 
 }
-
+/*
 module "appGw" {
   source            = "git@github.com:hmcts/cnp-module-waf?ref=ccd/CHG0033576"
   env               = "${var.env}"
@@ -215,3 +215,4 @@ module "appGw" {
     },
   ]
 }
+ */

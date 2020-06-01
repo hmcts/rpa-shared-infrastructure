@@ -49,13 +49,3 @@ variable "name" {
 variable "asp_capacity" {
   default = 2
 }
-
-variable "ilbIp" {}
-  
-variable "external_cert_name" {}
-
-variable "external_hostname" {}
-
-variable "external_hostname_www" {}
-
-variable "external_cert_vault_uri" {}

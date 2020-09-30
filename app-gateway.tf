@@ -1,6 +1,5 @@
 data "azurerm_key_vault" "cert_vault" {
   name = "infra-vault-dev"
-  resource_group_name = "cnp-core-infra"
 }
 
 data "azurerm_key_vault_secret" "cert" {

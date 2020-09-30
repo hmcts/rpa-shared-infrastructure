@@ -1,6 +1,5 @@
 data "azurerm_key_vault_secret" "cert" {
   name      = "${var.external_cert_name}"
-  vault_uri = "${var.external_cert_vault_uri}"
 }
 
 locals {

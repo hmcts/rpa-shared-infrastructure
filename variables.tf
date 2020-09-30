@@ -39,11 +39,15 @@ variable "team_name" {
 }
 
 variable "team_contact" {
-  default = "#judical_ui"
+  default = "#em-dev-chat"
 }
 
 variable "name" {
   default = false
+}
+
+variable "managed_identity_object_id" {
+  default = ""
 }
 
 variable "asp_capacity" {

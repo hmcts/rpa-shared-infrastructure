@@ -1,5 +1,6 @@
 data "azurerm_key_vault" "cert_vault" {
   name = "infra-vault-dev"
+  resource_group_name = "cnp-core-infra"
 }
 
 data "azurerm_key_vault_secret" "cert" {
@@ -21,7 +22,6 @@ module "appGw" {
   subscription      = "${var.subscription}"
   location          = "${var.location}"
   wafName           = "${var.product}"
-  resourcegroupname = "${azurerm_resource_group.rg.name}"
   common_tags       = "${var.common_tags}"
 
   # vNet connections

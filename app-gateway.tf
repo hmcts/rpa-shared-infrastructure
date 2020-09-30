@@ -1,5 +1,5 @@
 module "appGw" {
-  source            = "git@github.com:hmcts/cnp-module-waf?ref=CHG5001024"
+  source            = "git@github.com:hmcts/cnp-module-waf?ref=master"
   env               = "${var.env}"
   subscription      = "${var.subscription}"
   location          = "${var.location}"

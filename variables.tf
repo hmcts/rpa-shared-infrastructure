@@ -1,27 +1,24 @@
 variable "product" {}
 
 variable "location" {
-  type = "string"
   default = "UK South"
 }
 
 // as of now, UK South is unavailable for Application Insights
 variable "appinsights_location" {
-  type        = "string"
   default     = "West Europe"
   description = "Location for Application Insights"
 }
 
 variable "common_tags" {
-  type = "map"
+  type = map(string)
 }
 
 variable "env" {}
 
 variable "application_type" {
-  type        = "string"
-  default     = "Web"
-  description = "Type of Application Insights (Web/Other)"
+  default     = "web"
+  description = "Type of Application Insights (web/other)"
 }
 
 variable "tenant_id" {
@@ -35,11 +32,11 @@ variable "jenkins_AAD_objectId" {
 variable "subscription" {}
 
 variable "team_name" {
-  default = "rpa"
+  default = "em"
 }
 
 variable "team_contact" {
-  default = "#judical_ui"
+  default = "#em-dev-chat"
 }
 
 variable "name" {

@@ -4,7 +4,7 @@ module "appGw" {
   subscription      = "${var.subscription}"
   location          = "${var.location}"
   wafName           = "${var.product}"
-  resourcegroupname = "rpa-${var.env}"
+  resourcegroupname = ""
   common_tags       = "${var.common_tags}"
 
   # vNet connections

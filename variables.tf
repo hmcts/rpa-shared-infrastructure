@@ -20,7 +20,7 @@ variable "env" {}
 
 variable "application_type" {
   type        = "string"
-  default     = "Web"
+  default     = "web"
   description = "Type of Application Insights (Web/Other)"
 }
 
@@ -35,11 +35,11 @@ variable "jenkins_AAD_objectId" {
 variable "subscription" {}
 
 variable "team_name" {
-  default = "rpa"
+  default = "em"
 }
 
 variable "team_contact" {
-  default = "#judical_ui"
+  default = "#em-dev-chat"
 }
 
 variable "name" {
@@ -49,13 +49,3 @@ variable "name" {
 variable "asp_capacity" {
   default = 2
 }
-
-variable "ilbIp" {}
-  
-variable "external_cert_name" {}
-
-variable "external_hostname" {}
-
-variable "external_hostname_www" {}
-
-variable "external_cert_vault_uri" {}

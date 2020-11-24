@@ -1,5 +1,5 @@
 module "key_vault" {
-  source = "git@github.com:hmcts/cnp-module-key-vault?ref=azurermv2"
+  source = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name = "${var.product}-${var.env}"
   product = var.product
   env = var.env
@@ -8,7 +8,7 @@ module "key_vault" {
   resource_group_name = azurerm_resource_group.rg.name
   product_group_object_id = "5d9cd025-a293-4b97-a0e5-6f43efce02c0"
   common_tags = local.tags
-  create_managed_identity    = true
+
 }
 
 output "vaultName" {
